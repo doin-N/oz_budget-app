@@ -1,28 +1,29 @@
-import React, { useContext } from 'react'
-import { AppContext } from '../contexts/AppContext';
-import { formatNumberToWon } from '../utils/index';
+import React, { useContext } from "react";
+import { AppContext } from "../contexts/AppContext";
+import { formatNumberToWon } from "../utils";
 
-//남은돈 값 가져오기
 const Remaining = () => {
- // 배열의 객체 데이터 돈들 다 더하기 total은 누적기 
-  const { expenses, budget } = useContext(AppContext);
+  const { expenses, income } = useContext(AppContext);
 
-  //수입과 지출을 합산하여 남은 돈을 계산
-  const totalExpenses =
-  expenses.reduce((total, itme) => {
-    return (total += itme.cost)
+  // 수입과 지출을 합산하여 남은 돈을 계산
+  const totalExpenses = expenses.reduce((total, item) => {
+    return (total += item.cost);
   }, 0);
 
-  const alertType = totalExpenses > budget ? 'alert-danger' : 'alert-success';
-  return (
-  
-    <div className={`alert p-4 ${alertType} `}>
-      <span>
-        남은 돈: {formatNumberToWon(budget - totalExpenses)}
-      </span>
-      
-    </div>
-  )
-}
+  const totalIncome = income.reduce((total, item) => {
+    return (total += item.amount);
+  }, 0);
 
-export default Remaining
+  const remainingBudget = totalIncome - totalExpenses;
+
+  // 남은 돈에 따라 경고 타입 결정
+  const alertType = remainingBudget < 0 ? "alert-danger" : "alert-success";
+
+  return (
+    <div className={`alert p-4 ${alertType}`}>
+      <span>남은 돈: {formatNumberToWon(remainingBudget)}</span>
+    </div>
+  );
+};
+
+export default Remaining;
