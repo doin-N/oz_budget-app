@@ -1,3 +1,4 @@
+//남은돈 계산
 import React, { useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
 import { formatNumberToWon } from "../utils";
