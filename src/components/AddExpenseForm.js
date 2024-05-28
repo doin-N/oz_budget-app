@@ -26,6 +26,7 @@ const AddExpenseForm = () => {
     setCost(0);
   }
 
+  // 지출 추가 부분 ui
   return (
     <form onSubmit={handleSubmit} >
       <div className='row'>
